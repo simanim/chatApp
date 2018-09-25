@@ -1,0 +1,32 @@
+<link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
+<form method="POST" class="sign">
+        <p><u><h3>{{message}}</h3></u></p>
+    <table>
+        <tr>
+            <td>First Name</td>
+            <td><input type="text" name="First_Name" ng-model="user.firstname" required/><td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td><input type="text" name="Last_Name" ng-model="user.lastname" required/><td>
+        </tr>
+        <tr>
+            <td>Email Id</td>
+            <td><input type="email" name="Email Id" ng-model="user.email" required/></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" name="password" ng-model="user.password" required></td>
+        </tr>
+        <tr>
+            <td>Confirm Password</td>
+            <td><input type="password" name="confPassword" ng-model="user.confPassword" required/><br></td>
+        </tr>
+    </table>
+    <button type="submit" class="sub" ng-click="register()">Sign Up</button>
+    
+    <br><br>
+
+    <div><span>already have an account? <a href="#">login</a></span></div>
+
+</form> 
