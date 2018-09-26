@@ -14,12 +14,6 @@ chatApp.config(function($routeProvider) {
             controller  : 'signupController'
         })
         
-        // // route for the signup page
-        // .when('/loginPage', {
-        //     templateUrl : './temp/login.html',
-        //     controller  :'loginController'
-        // })
-
         .when('/forgotPass', {
                 templateUrl : './temp/forgotPass.html'
             });

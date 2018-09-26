@@ -13,12 +13,12 @@ chatApp.controller('loginController', function($scope, $http){
         })
         .then(function(response){
             if(response.data.error==false){
-                $scope.message="regn Successful";
+                $scope.message="login Successful";
             }
         },function(err){
             
             console.log(err);
-            $scope.message="regn Unsuccessful";
+            $scope.message="login Unsuccessful";
         })
     }
 });

@@ -1,4 +1,5 @@
 /**
+ * 
  *@param {*} password
  *@description encrypting the given password
  */
@@ -10,15 +11,17 @@ function encrypt(password){
     return password_1;
 }
 /**
+ * 
  *@param {*} name
  *@description checking the given name is valid or not.
  *             name contains only Alphabets and 3-20 characters.
  */
 function validateName(name){
-    var regex = /^[a-z]{3,20}$/;
+    var regex = /^[a-z]{3,40}$/;
     return regex.test(name);
 }
 /**
+ * 
  *@param {*} email
  *@description checking the given email is valid or not
  */
@@ -30,6 +33,7 @@ var regex=/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/;
     return regex.test(email);
 }
 /**
+ * 
  *@param {*} password
  *@description checking the given password is valid or not
  *             password contains alphabets,numbers and special characters and 6-16 characters.
@@ -43,6 +47,7 @@ var usermod = require('../models/userSchema');
 var jwt = require('jsonwebtoken');
 
 /**
+ * 
  *@param {*} req
  *@param {*} res
  */
@@ -134,22 +139,21 @@ exports.registration = function(req,res)
             });
         }
         else{
-            return res.json({
-                "error":true,
-                "message":e.message
-            });
+            response={"error":true,"message":e.message}
+            return res.status(401).send(response);
         }
     }
 }
 
 /**
+ * 
  *@param {*} req
  *@param {*} res
  */
 exports.login=function(req,res)
 {
     try{
-        var secret="qweasdzxc123";
+        var secret="qwerty123456!@#$%^"; 
         if(typeof req.body.email == "undefined"){
             throw new Error("email is Required");
         }
@@ -174,14 +178,14 @@ exports.login=function(req,res)
             }
             else if(data.length > 0){
                 var token=jwt.sign({email:req.body.email,password:req.body.password},secret,{expiresIn:86400});
-                response = {"error" : false,"token":token,"message" : "successfully loged in", "err":err};
+                response = {"error" : false,"token":token,"message" : "successfully loged in", "userId" : data[0].id, "err":err};
                 return res.status(202).send(response);
                 /**
                 *@description logged in
                 */
             }
             else{
-                response = {"error" : true,"message" : "email id does not exist.you can create a new account", "err":err};
+                response = {"error" : true,"message" : "incorrect email or password", "err":err}; 
                 return res.status(400).send(response);
                 /**
                 *@description email id is not stored in the data base
@@ -195,10 +199,44 @@ exports.login=function(req,res)
             return res.status(400).send(response);
         }
         else{
-            return res.json({
-                "error":true,
-                "message":e.message
-            });
+            response={"error":true,"message":e.message}
+            return res.status(401).send(response);
+        }
+    }
+}
+
+/**
+ * 
+ *@param {*} req
+ *@param {*} res
+ */
+exports.listOfUsers = function(req,res)
+{
+    try{
+        var response={};
+        var dataArray=[];
+        var userId=req.params.id;
+        usermod.find({"id":{$ne:userId}},function(err,data){
+            for(key in data){
+                dataArray.push(response={useremail:data[key].email,userId:data[key].id});
+            }
+            if(err){
+                response={"error":true,"message":"error retrieving data"}
+            }
+            else{
+                response={"error":false,"message":dataArray}
+            }
+            return res.status(200).send(response);
+        }) 
+    }
+    catch(e){
+        if(e instanceof ReferenceError || e instanceof TypeError || e instanceof SyntaxError || e instanceof RangeError){
+            response = {"error" : true,"message" : "something bad happened", "err":err};
+            return res.status(400).send(response);
+        }
+        else{
+            response={"error":true,"message":e.message}
+            return res.status(401).send(response);
         }
     }
 }
