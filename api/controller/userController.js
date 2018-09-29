@@ -17,7 +17,7 @@ function encrypt(password){
  *             name contains only Alphabets and 3-20 characters.
  */
 function validateName(name){
-    var regex = /^[a-z]{3,40}$/;
+    var regex = /^[a-z ]{3,40}$/;
     return regex.test(name);
 }
 /**
@@ -25,11 +25,8 @@ function validateName(name){
  *@param {*} email
  *@description checking the given email is valid or not
  */
-function validateEmail(email) 
-{
-    //var regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-var regex=/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/;
-    //var regex = /\S+@\S+\.\S+/;
+function validateEmail(email) {
+    var regex=/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/;
     return regex.test(email);
 }
 /**
@@ -38,8 +35,7 @@ var regex=/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/;
  *@description checking the given password is valid or not
  *             password contains alphabets,numbers and special characters and 6-16 characters.
  */
-function validatePassword(password) 
-{
+function validatePassword(password) {
     var regex = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
     return regex.test(password);
 }
@@ -52,8 +48,9 @@ var jwt = require('jsonwebtoken');
  *@param {*} res
  */
 exports.registration = function(req,res)
-{
+{ 
     try{
+        
         if(typeof req.body.firstname == "undefined" || typeof req.body.lastname == "undefined"){
             throw new Error("Name is Required");
         }
@@ -66,7 +63,7 @@ exports.registration = function(req,res)
         if(typeof req.body.confPassword == "undefined"){
             throw new Error("confPassword is Required");
         }
-
+        
         var db = new usermod();
         var response = {}; 
         var email1 = req.body.email;
@@ -90,6 +87,8 @@ exports.registration = function(req,res)
             return res.status(400).send(response);
         }
         if(db.password != db.confPassword){
+            console.log(db.password);
+            console.log(db.confPassword);
             response = {"error" : true,"message" : "passwords are not matching"};
             return res.status(400).send(response);
         }
@@ -102,21 +101,21 @@ exports.registration = function(req,res)
         usermod.find({"email":email1},function(err,data){
             if(err){
                 response = {"error" : true,"message" : "error", "err":err};
-                return res.status(404).send(response);
+                return res.status(400).send(response);
             }
             else{
-                if(data.length > 0){
+                if(data.length > 0){ 
                    /**
                     *@description it checks the given email is already registered or not
                     */
                     response = {"error" : true,"message" : "email id already exist", "err":err};
-                    return res.status(404).send(response);
+                    return res.status(400).send(response);
                 }
                 else{
                     db.save(function(err){
                         if(err) {
                             response = {"error" : true,"message" : "Error adding data", "err":err};
-                            return res.status(404).send(response);
+                            return res.status(400).send(response);
                         } 
                         else {
                             response = {"error" : false,"message" : "Data added"};
@@ -132,15 +131,12 @@ exports.registration = function(req,res)
     }
     catch(e){
         if(e instanceof ReferenceError || e instanceof TypeError || e instanceof SyntaxError || e instanceof RangeError){
-           console.log(e);
-            return res.json({
-                "error":true,
-                "message":"something bad happened"
-            });
+            response={"error":true,"message":"something bad happened"}
+            res.status(400).send(response);
         }
         else{
             response={"error":true,"message":e.message}
-            return res.status(401).send(response);
+            return res.status(400).send(response);
         }
     }
 }
@@ -151,21 +147,23 @@ exports.registration = function(req,res)
  *@param {*} res
  */
 exports.login=function(req,res)
-{
+{ 
     try{
+
         var secret="qwerty123456!@#$%^"; 
-        if(typeof req.body.email == "undefined"){
+        if(typeof req.body.email == ""){
             throw new Error("email is Required");
         }
-        if(typeof req.body.password == "undefined"){
+        if(typeof req.body.password == ""){
             throw new Error("password is Required");
         }
-        var email1=req.body.email;
+
+        var email1=req.body.email;       
         var password1=encrypt(req.body.password);
-    
+       
         if(validateEmail(email1) == false){
             response = {"error" : true,"message" : "invalid email id"};
-            return res.status(400).send(response);
+            return res.status(404).send(response);
             /**
             *@description it checks the given email is valid or not
             */
@@ -178,7 +176,7 @@ exports.login=function(req,res)
             }
             else if(data.length > 0){
                 var token=jwt.sign({email:req.body.email,password:req.body.password},secret,{expiresIn:86400});
-                response = {"error" : false,"token":token,"message" : "successfully loged in", "userId" : data[0].id, "err":err};
+                response = {"error" : false,"token":token,"message" : "successfully loged in", "userid" : data[0].id, "err":err};
                 return res.status(202).send(response);
                 /**
                 *@description logged in
@@ -186,7 +184,7 @@ exports.login=function(req,res)
             }
             else{
                 response = {"error" : true,"message" : "incorrect email or password", "err":err}; 
-                return res.status(400).send(response);
+                return res.status(404).send(response);
                 /**
                 *@description email id is not stored in the data base
                 */
@@ -195,16 +193,15 @@ exports.login=function(req,res)
     }
     catch(e){
         if(e instanceof ReferenceError || e instanceof TypeError || e instanceof SyntaxError || e instanceof RangeError){
-            response = {"error" : true,"message" : "something bad happened", "err":err};
+            response = {"error" : true,"message" : "something bad happened", "err":e.message};
             return res.status(400).send(response);
         }
         else{
             response={"error":true,"message":e.message}
-            return res.status(401).send(response);
+            return res.status(400).send(response);
         }
     }
 }
-
 /**
  * 
  *@param {*} req
@@ -215,10 +212,19 @@ exports.listOfUsers = function(req,res)
     try{
         var response={};
         var dataArray=[];
-        var userId=req.params.id;
-        usermod.find({"id":{$ne:userId}},function(err,data){
+        var userid=req.params.id;
+       /**
+        *@description extracting the user id of the user who has logged in
+        */
+        usermod.find({"_id":{$ne:userid}},function(err,data){
+           /**
+            *@description finding all the users except the user who is logged in using $ne 
+            */
             for(key in data){
-                dataArray.push(response={useremail:data[key].email,userId:data[key].id});
+                dataArray.push(response={useremail:data[key].email,userid:data[key]._id});
+               /**
+                *@description pushing all the user email and id to an array except the loggedin user
+                */
             }
             if(err){
                 response={"error":true,"message":"error retrieving data"}

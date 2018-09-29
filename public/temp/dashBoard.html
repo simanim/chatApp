@@ -1,8 +1,27 @@
-<link rel="stylesheet" type="text/css" href="../assets/css/chatBox.css">
-<div class="box1"></div>
-<div class="box2">        
-    <div class="box3">
-        <input type="text" name="text" class="type" placeholder="type your message here"/>
-                <!-- <input type="button" name="button" class="button" placeholder="send"/> -->
-    </div> 
-</div
+<link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
+<header class="box1">
+    <h1>chatapp</h1>
+    <button type="submit" name="button" class="logout" ng-click="logout()">Log Out</button>
+</header>
+<table class="table">
+    <tr>
+        <td><div class="box2">
+            <h3><li ng-repeat="x in array">{{x}}</li></h3>
+            </div>
+        </td>
+        <td>
+            <div class="box3">
+                <table class="table2">
+                    <tr>
+                    <td>
+                    <textarea name="text" class="type" cols="13" rows="2" placeholder="type your message here"></textarea>
+                    </td>
+                    <td>
+                        <button type="submit" name="button" class="button">SEND</button>
+                    </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

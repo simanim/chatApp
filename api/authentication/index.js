@@ -1,24 +1,23 @@
-
 var jwt = require('jsonwebtoken');
-const secret = "qwerty123456!@#$%^";
+var secret="qwerty123456!@#$%^"; 
+
 var auth = function(req, res, next){
-var token=req.headers["token"];
-var respo = {
-      'message': "Unauthorised Entry "
-};
+      var token=req.headers["token"];
+      var response = {
+            'message': "Unauthorised Entry "
+      };//console.log(req.headers);
       console.log("in auth ", token);
+      
       jwt.verify(token, secret, function(err, decoded) {
-            if(err)
-            {
-                  console.log(err)
-                  return res.status(401).send(respo);
+            if(err){
+                  console.log(err);
+                  return res.status(401).send(response);
             }
             else{
+                  //console.log("in");
                   console.log(decoded);
-                  next()
+                  next();
             }
-      });
- 
-          
+      });    
 }
 module.exports = auth;

@@ -1,26 +1,41 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
-<form method="POST" class="sign">
+<form method="POST" class="sign"    name="form">
         <p><u><h3>{{message}}</h3></u></p>
     <table>
         <tr>
             <td>First Name</td>
-            <td><input type="text" name="First_Name" minlength="3" maxlength="40" ng-model="user.firstname" required/><td>
+            <td>
+                <input type="text" class="text" name="firstname"  maxlength="40" ng-model="user.firstname" ng-pattern="/^[a-z ]{3,40}$/" required/>
+                <div style="color:rgb(209, 112, 112)" ng-show="form.firstname.$error.pattern"><small><i>min 3 characters & in lowercase</i></small></div>
+            </td>
         </tr>
         <tr>
             <td>Last Name</td>
-            <td><input type="text" name="Last_Name" minlength="3" maxlength="40" ng-model="user.lastname" required/><td>
+            <td>
+                <input type="text" class="text" name="lastname" maxlength="40" ng-model="user.lastname" ng-pattern="/^[a-z ]{3,40}$/" required/>
+                <div style="color:rgb(209, 112, 112)" ng-show="form.lastname.$error.pattern"><small><i>min 3 characters & in lowercase</i></small></div>
+            <td>
         </tr>
         <tr>
             <td>Email Id</td>
-            <td><input type="email" name="Email Id" ng-model="user.email" required/></td>
+            <td>
+                <input type="email" name="Email_Id" ng-model="user.email" ng-pattern="/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/" required/>
+                <div style="color:rgb(209, 112, 112)" ng-show="form.Email_Id.$error.pattern"><small><i>invalid email id</i></small></div>
+            </td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type="password" name="password" minlength="6" maxlength="16" ng-model="user.password" required></td>
+            <td>
+                <input type="password" name="password" minlength="6" maxlength="16" ng-model="user.password" ng-pattern="/^[a-zA-Z0-9!@#$%^&*]{6,16}$/" required>
+                <div style="color:rgb(209, 112, 112)" ng-show="form.password.$error.pattern"><small><i>invalid password! 6-16 characters</i></small></div>
+            </td>
         </tr>
         <tr>
             <td>Confirm Password</td>
-            <td><input type="password" name="confPassword" minlength="6" maxlength="16" ng-model="user.confPassword" required/><br></td>
+            <td>
+                <input type="password" name="confPassword" minlength="6" maxlength="16" ng-model="user.confPassword" required/>
+                <div style="color:rgb(209, 112, 112)" ng-show="check()"><small><i>passwords are not matching</i></small></div>
+            </td>
         </tr>
     </table>
     <button type="submit" class="sub" ng-click="register()">Sign Up</button>
