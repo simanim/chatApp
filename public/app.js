@@ -1,4 +1,4 @@
-var chatApp = angular.module('chatApp', ['ngRoute']);
+var chatApp = angular.module('chatApp', ['ngRoute' ,'btford.socket-io']);
 chatApp.config(function($routeProvider) {
     $routeProvider
 
@@ -22,7 +22,8 @@ chatApp.config(function($routeProvider) {
         *@description route for the forgot password page
         */
         .when('/forgotPass', {
-            templateUrl : './temp/forgotPass.html'
+            templateUrl : './temp/forgotPass.html',
+            controller  : 'forgotPassController'
         })
 
        /**
@@ -32,9 +33,20 @@ chatApp.config(function($routeProvider) {
             templateUrl : './temp/dashBoard.html',
             controller  : 'homeController'
         })
+
+        .when('/changePass', {
+            templateUrl : './temp/changePass.html',
+            controller  : 'changepassController'
+        })
         
         /**
         *@description route for the default page
         */
         .otherwise({redirectTo:'/'});
 }); 
+
+chatApp.service('SocketService', ['socketFactory', function SocketService(socketFactory){
+    return socketFactory({
+        ioSocket : io.connect('http://localhost:4200')
+    });
+}]);

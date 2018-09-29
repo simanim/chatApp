@@ -40,6 +40,7 @@ function validatePassword(password) {
     return regex.test(password);
 }
 var usermod = require('../models/userSchema');
+var chatmod = require('../models/chatSchema');
 var jwt = require('jsonwebtoken');
 
 /**
@@ -72,7 +73,6 @@ exports.registration = function(req,res)
         db.lastname = req.body.lastname;
         db.email = req.body.email; 
         db.password = req.body.password;
-        db.confPassword = req.body.confPassword;
         
         if(validateEmail(email1) == false){
             response = {"error" : true,"message" : "invalid email"};
@@ -86,14 +86,11 @@ exports.registration = function(req,res)
             response = {"error" : true,"message" : "invalid password"};
             return res.status(400).send(response);
         }
-        if(db.password != db.confPassword){
-            console.log(db.password);
-            console.log(db.confPassword);
+        if(db.password != req.body.confPassword){
             response = {"error" : true,"message" : "passwords are not matching"};
             return res.status(400).send(response);
         }
         db.password = encrypt(req.body.password);
-        db.confPassword = encrypt(req.body.confPassword);
        /**
         *@description it encrypt the password
         */
@@ -245,4 +242,120 @@ exports.listOfUsers = function(req,res)
             return res.status(401).send(response);
         }
     }
+}
+
+exports.forgotPass = function(req,res)
+{
+    var response={};
+    var email1=req.body.email;
+    if(validateEmail(email1) == false){
+        response = {"error" : true,"message" : "invalid email"};
+        return res.status(400).send(response);
+    }   
+    usermod.find({"email":email1},function(err,data){
+        if(err){
+            response = {"error" : true,"message" : "error", "err":err};
+            return res.status(400).send(response);
+        }
+        else if(data.length > 0){
+            response = {"error" : false,"message" : "successful", "userid" : data[0].id, "err":err};
+            return res.status(202).send(response);
+        }
+        else{
+            response = {"error" : true,"message" : "incorrect email or password", "err":err}; 
+            return res.status(404).send(response);
+            /**
+            *@description email id is not stored in the data base
+            */
+        }
+    });
+}
+
+exports.changePass = function(req,res)
+{
+    var db = new usermod();
+    var response={};
+    var email1=req.body.email;
+    db.password = req.body.password;
+    db.confPassword = req.body.confPassword;
+    if(validateEmail(email1) == false){
+        response = {"error" : true,"message" : "invalid email"};
+        return res.status(400).send(response);
+    }
+    if(validatePassword(db.password) == false){
+        response = {"error" : true,"message" : "invalid password"};
+        return res.status(400).send(response);
+    }
+    if(db.password != db.confPassword){
+        response = {"error" : true,"message" : "passwords are not matching"};
+        return res.status(400).send(response);
+    }
+    db.password = encrypt(req.body.password);
+    db.confPassword = encrypt(req.body.confPassword);
+    
+    usermod.find({"email":email1},function(err,data){
+        if(err){
+            response = {"error" : true,"message" : "error", "err":err};
+            return res.status(400).send(response);
+        }
+        else if(data.length > 0){
+            data[0].password=db.password;
+            data[0].confPassword=db.confPassword;
+            data[0].save(function(err){
+                if(err) {
+                    response = {"error" : true,"message" : "Error adding data", "err":err};
+                    return res.status(400).send(response);
+                } 
+                else {
+                    response = {"error" : false,"message" : "password changed"};
+                    return res.status(201).send(response);
+                    /**
+                    *@description it saves the data to the database
+                    */
+                }
+            });
+        }
+        else{
+            response = {"error" : true,"message" : "incorrect email or password", "err":err}; 
+            return res.status(404).send(response);
+            /**
+            *@description email id is not stored in the data base
+            */
+        }
+    });
+}
+
+exports.chatList = function(userid,message,date)
+{
+    var db = new chatmod();
+    var response={};
+    db.message = message;
+    db.userid = userid;
+    db.date = date;
+    db.save(function(err){
+        if(err) {
+            response = {"error" : true,"message" : "unsuccess", "err":err};
+        } 
+        else{
+            response = {"error" : false,"message" : "success"};
+        }
+        console.log(response)
+    });
+}
+
+exports.getChat = function(req,res)
+{
+    var response={};
+
+    chatmod.find({},function(err,data){
+        if(err) {
+            response = {"error" : true,"message" : "unsuccess", "err":err};
+            return res.status(200).send(response);
+        } 
+        else{
+            console.log(data);
+            response = {"error" : false,"message" : data};
+            return res.status(401).send(response);
+        }
+    });
 }

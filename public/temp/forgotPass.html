@@ -1,9 +1,11 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
 <form method="POST" class="container">
+      
     <p><h1>Forgot password?</h1></p><br>
     <p>Enter your registered email id to reset password</p>
-    <p><input type="email" name="email id" placeholder="example@gmail.com" required/></p><br><br>
-    <button class="forgot" href="#"><span><a href="#">back</a></span></button>
+    <p><input type="email" name="email" placeholder="example@gmail.com" ng-model="user.email" required/></p><br><br>
 
-    <button type="submit" class="forgot">Reset</button>
+    <button type="submit" class="forgot" ng-click="forgotPass()">Reset</button>
+    <p><u><h3>{{message}}</h3></u></p>
+    <div><span><a href="#">back</a></span></div>
 </form>

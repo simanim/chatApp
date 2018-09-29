@@ -130,6 +130,7 @@ table{
     width:950px;
     background-color:rgb(178, 218, 223);
     overflow: scroll;
+    text-align: left;
 }
 
 .type{
@@ -164,4 +165,12 @@ table{
       padding:2px;
       width:930px;
       margin-top:390px;
+}
+.back{
+    color:black;
+    height:10%;
+    width:20%;
+    background-color:rgb(20, 212, 30);
+    /* margin-left:1000px; */
+    padding:8px;
 }

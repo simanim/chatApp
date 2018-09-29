@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
 <header class="box1">
     <h1>chatapp</h1>
+    <button type="submit" name="password" class="logout" ng-click="changePass()">change password</button><br>
     <button type="submit" name="button" class="logout" ng-click="logout()">Log Out</button>
 </header>
 <table class="table">
@@ -11,13 +12,14 @@
         </td>
         <td>
             <div class="box3">
+                    <li ng-repeat="y in chatList">{{y}}</li>
                 <table class="table2">
                     <tr>
                     <td>
-                    <textarea name="text" class="type" cols="13" rows="2" placeholder="type your message here"></textarea>
+                    <textarea name="text" class="type" cols="13" rows="2" placeholder="type your message here" ng-model="data"></textarea>
                     </td>
                     <td>
-                        <button type="submit" name="button" class="button">SEND</button>
+                        <button type="submit" name="button" class="button" ng-click="send()">SEND</button>
                     </td>
                     </tr>
                 </table>

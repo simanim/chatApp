@@ -1,12 +1,11 @@
-chatApp.controller('homeController', function($scope, $http, $location){
+chatApp.controller('homeController', function($scope, $http, $location, SocketService){
     var userstoken=localStorage.getItem("token");
     var userid=localStorage.getItem("userid");
+    var array=[];
     /**
     *@description taking token and userid from local storage
     */
-    //console.log("in");
-    //console.log(userid);
-    var array=[];
+    
     $http({
         method: 'GET',
         url: 'auth/users/'+userid+'/userlist',
@@ -26,7 +25,7 @@ chatApp.controller('homeController', function($scope, $http, $location){
     })
     
     $scope.array= array;
-    // console.log("token  "+userstoken);
+    // $scope.chatArray=chatArray;
     $scope.logout = function () {
         localStorage.removeItem("token");
         localStorage.removeItem("userid");
@@ -35,5 +34,38 @@ chatApp.controller('homeController', function($scope, $http, $location){
         */
         $location.path("/login"); 
     }
+    $scope.changePass = function () {
+        $location.path("/changePass"); 
+    }
+
+   /**
+    *@description getting the chat
+    */
+    $scope.chatList = [];
+    
+    $scope.send = function () {
+       
+            SocketService.emit('tobackend', { 
+                "userid": userid, "message": $scope.data, "date": new Date() 
+            });
+        
+    }
+    $http({
+        method: 'GET',
+        url: 'auth/getChat',
+        
+    }).then(function(response){
+        console.log(response.data.message);
+        $scope.chatList = response.data.message;
+    })
+    SocketService.on('toclient', function(message){
+        console.log(message);
+        $scope.chatList.push(message);
+        $scope.user={
+            'message' : '',
+            'email' : '',
+            'date' : ''
+        }
+    });
     
 });

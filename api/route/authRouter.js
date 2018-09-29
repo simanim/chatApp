@@ -4,5 +4,6 @@ var users=require('../controller/userController');
 var auth=require('../authentication');
 
 router.get('/users/:id/userlist',auth, users.listOfUsers);
+router.get('/getChat',auth, users.getChat);
 
 module.exports = router;

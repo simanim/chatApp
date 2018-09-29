@@ -1,0 +1,11 @@
+<link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
+<form method="POST" class="container">
+        <p><u><h3>{{message}}</h3></u></p>
+    <p>Enter your registered email id to change password</p>
+    <p><input type="email" name="email" placeholder="example@gmail.com" ng-model="user.email" required/></p>
+    <p><input type="password" name="password" placeholder="password" ng-model="user.password" required/></p>
+    <p><input type="password" name="confPassword" placeholder="confirm password" ng-model="user.confPassword" required/></p><br>
+
+    <button type="submit" name="changePass" class="back" ng-click="changePass()">update</button><br>
+    <div><span><a href="#">back</a></span></div>
+</form>
