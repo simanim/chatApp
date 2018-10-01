@@ -1,29 +1,50 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
 <header class="box1">
-    <h1>chatapp</h1>
-    <button type="submit" name="password" class="logout" ng-click="changePass()">change password</button><br>
-    <button type="submit" name="button" class="logout" ng-click="logout()">Log Out</button>
+        <!-- <div class="user"><h1>Hii {{loginuser}}, Welcome to ChatApp</h1>YOU : </div> -->
+    <h1>Welcome to ChatApp</h1>
+    <div class="user"><u>{{loginuser}}</u></div>
+    <table class="table3"><tr>
+    <td>
+        <button type="submit" name="password" class="logout" ng-click="changePass()">change password</button><br>
+    </td>
+    <td>
+        <button type="submit" name="button" class="logout" ng-click="logout()">Log Out</button>
+    </td>
+    </tr></table>
 </header>
+
 <table class="table">
     <tr>
-        <td><div class="box2">
-            <h3><li ng-repeat="x in array">{{x}}</li></h3>
+    <td>
+        <div class="box2">
+        <h3><p ng-repeat="x in array"><span><i>{{x}}</i></span></p></h3>
+        </div>
+    </td>
+    <td>
+        <div class="box3">
+            <div ng-repeat="y in chatList track by $index" >
+                <p class="design1" ng-if="y.email!=loginuser">
+                    <span class="email1">{{y.email}}</span>
+                    <span class="date1">{{y.date|date:'medium'}}</span><br>
+                    <span class="message1">{{y.message}}</span><br>
+                </p>
+                <p class="design2" ng-if="y.email==loginuser">
+                        <span class="date2">{{y.date|date:'medium'}}</span>
+                        <span class="email2">{{y.email}}</span><br>
+                        <span class="message2">{{y.message}}</span><br>
+                </p> <br>
             </div>
-        </td>
-        <td>
-            <div class="box3">
-                    <li ng-repeat="y in chatList">{{y}}</li>
-                <table class="table2">
-                    <tr>
-                    <td>
-                    <textarea name="text" class="type" cols="13" rows="2" placeholder="type your message here" ng-model="data"></textarea>
-                    </td>
-                    <td>
-                        <button type="submit" name="button" class="button" ng-click="send()">SEND</button>
-                    </td>
-                    </tr>
-                </table>
-            </div>
-        </td>
+            <table class="table2" border 2px;>
+            <tr>
+                <td>
+                    <textarea name="text" class="type" cols="13" rows="2" placeholder="type your message here" ng-model="message"></textarea>
+                </td>
+                <td>
+                    <button type="submit" name="button" class="button2" ng-click="send()">SEND</button>
+               </td>
+            </tr>
+            </table>
+        </div>
+    </td>
     </tr>
 </table>

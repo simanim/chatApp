@@ -16,9 +16,7 @@ chatApp.controller('signupController', function($scope, $http, $location){
             data: $scope.user
         })
         .then(function(response){
-            //console.log(response)
             console.log(response.data)
-            //console.log(response.data.error)
 
             if(response.data.error==false){
                 console.log("successfull");

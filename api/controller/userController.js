@@ -43,10 +43,11 @@ var usermod = require('../models/userSchema');
 var chatmod = require('../models/chatSchema');
 var jwt = require('jsonwebtoken');
 
-/**
+/** 
  * 
  *@param {*} req
  *@param {*} res
+ *@description for register a new account
  */
 exports.registration = function(req,res)
 { 
@@ -142,6 +143,7 @@ exports.registration = function(req,res)
  * 
  *@param {*} req
  *@param {*} res
+ *@description for login from an account
  */
 exports.login=function(req,res)
 { 
@@ -199,10 +201,12 @@ exports.login=function(req,res)
         }
     }
 }
+
 /**
  * 
  *@param {*} req
  *@param {*} res
+ *@description for getting the list of users
  */
 exports.listOfUsers = function(req,res)
 {
@@ -218,7 +222,7 @@ exports.listOfUsers = function(req,res)
             *@description finding all the users except the user who is logged in using $ne 
             */
             for(key in data){
-                dataArray.push(response={useremail:data[key].email,userid:data[key]._id});
+                dataArray.push(response={email:data[key].email,userid:data[key]._id});
                /**
                 *@description pushing all the user email and id to an array except the loggedin user
                 */
@@ -244,11 +248,20 @@ exports.listOfUsers = function(req,res)
     }
 }
 
+/**
+ * 
+ *@param {*} req
+ *@param {*} res
+ *@description if the user foget password, then it can be reset
+ */
 exports.forgotPass = function(req,res)
 {
     var response={};
     var email1=req.body.email;
     if(validateEmail(email1) == false){
+       /**
+        *@description first it will check the email id is valid or not
+        */
         response = {"error" : true,"message" : "invalid email"};
         return res.status(400).send(response);
     }   
@@ -271,6 +284,12 @@ exports.forgotPass = function(req,res)
     });
 }
 
+/**
+ * 
+ *@param {*} req
+ *@param {*} res
+ *@description for changing the password from the account
+ */
 exports.changePass = function(req,res)
 {
     var db = new usermod();
@@ -279,6 +298,9 @@ exports.changePass = function(req,res)
     db.password = req.body.password;
     db.confPassword = req.body.confPassword;
     if(validateEmail(email1) == false){
+       /**
+        *@description checking the email is valid or not
+        */
         response = {"error" : true,"message" : "invalid email"};
         return res.status(400).send(response);
     }
@@ -325,37 +347,57 @@ exports.changePass = function(req,res)
     });
 }
 
-exports.chatList = function(userid,message,date)
+/**
+ * 
+ *@param {*} email
+ *@param {*} message
+ *@param {*} date
+ *@description for saving all the chat list
+ */
+exports.chatList = function(userid,email,message,date)
 {
     var db = new chatmod();
     var response={};
+
+    db.userid = userid
     db.message = message;
-    db.userid = userid;
+    db.email = email;
     db.date = date;
     db.save(function(err){
+       /**
+        *@description saving the messages in the data base
+        */
         if(err) {
             response = {"error" : true,"message" : "unsuccess", "err":err};
         } 
         else{
             response = {"error" : false,"message" : "success"};
         }
-        console.log(response)
+        console.log(response);
     });
 }
 
+/**
+ * 
+ *@param {*} req
+ *@param {*} res
+ *@description for getting the chat history
+ */
 exports.getChat = function(req,res)
 {
     var response={};
-
     chatmod.find({},function(err,data){
+        /**
+        *@description retriving all the messages from the data base
+        */
         if(err) {
             response = {"error" : true,"message" : "unsuccess", "err":err};
-            return res.status(200).send(response);
+            return res.status(401).send(response);
         } 
         else{
             console.log(data);
             response = {"error" : false,"message" : data};
-            return res.status(401).send(response);
+            return res.status(200).send(response);
         }
     });
 }

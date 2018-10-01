@@ -27,13 +27,16 @@ chatApp.controller('loginController', function($scope, $http, $location){
                     $scope.message="login Successful";
                     var token=response.data.token;
                     var userid=response.data.userid;
+                   
+                    console.log("login")
                    /**
                     *@description if the user email and password is correct, it will take to dashboard
                     *             and store the token and userid to local storage
                     */
                     localStorage.setItem("token",token);
                     localStorage.setItem("userid",userid);
-
+                    localStorage.setItem("email",$scope.user.email);
+                    
                     $location.path("/dashBoard"); 
                 }
             },function(err){

@@ -19,10 +19,12 @@ console.log("Listening to PORT 4200");
 var io = socket(server);
 io.on('connection', function(client) {
     console.log("system responding");
+    
+    client.on('disconnected', function() {
+        console.log("disconnected");
+    })
     client.on('tobackend', function(data) {
-        users.chatList(data.userid,data.message,data.date);
-        // client.in(data.receiverid).emit(data.receiverid, data.message);
-        // console.log(data);
-        // client.emit('toclient', data);
+        users.chatList(data.userid, data.email, data.message, data.date);
+        io.emit('tofrontend',data)
     })
 });

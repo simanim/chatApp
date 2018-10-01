@@ -1,8 +1,13 @@
 var mongoose = require("mongoose");
 
-// create instance of Schema
+/**
+ *@description creating instance of Schema
+ */
 var mongoSchema = mongoose.Schema;
-// create schema
+
+/**
+ *@description creating a Schema for store user details
+ */
 var userSchema = new mongoSchema({
     "firstname": { type: String,  required: true },
     "lastname": { type: String,  required: true },
