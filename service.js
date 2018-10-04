@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({ "extended": false }));
 app.use('/', router);
 app.use(express.static('./public'))
 
-var server = app.listen(4200);
-console.log("Listening to PORT 4200");
+var server = app.listen(4100);
+console.log("Listening to PORT 4100");
 
 var io = socket(server);
 io.on('connection', function(client) {
