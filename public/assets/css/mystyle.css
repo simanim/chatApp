@@ -1,3 +1,137 @@
+body {
+    color:#070d41;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align:center;
+    background-image: url("../images/backGround.jpg"); 
+    height:95%;
+    width:95%;
+}
+
+.boxchat{
+    border:10px solid rgb(71, 182, 178);
+    margin-left:-4px;
+    margin-top:-3px;
+}
+
+.boxgroup{
+    
+    height:443px;
+    width:940px;
+    background-color:rgb(178, 218, 223);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    text-align: left;
+    margin-bottom:-10px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.boxheader{
+    border:10px solid rgb(71, 182, 178);
+    background-color:rgb(61, 207, 202);
+    width:1240px;
+    height:108px;
+    color:rgb(31, 94, 92);
+}
+
+.boxheaderpeer{
+    border:10px solid rgb(71, 182, 178);
+    background-color:rgb(61, 207, 202);
+    width:1240px;
+    height:108px;
+    color:rgb(31, 94, 92);
+
+    
+}
+
+.boxpeer{
+    height:443px;
+    width:940px;
+    background-color:rgb(178, 218, 223);
+    overflow-y: scroll;
+    /* text-align: left; */
+    margin-bottom:-10px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.boxusers{
+    border:10px solid rgb(71, 182, 178);
+    height:510px;
+    width:280px;
+    text-align: left;
+    background-color: rgb(61, 207, 202);
+    color:rgb(50, 104, 90);
+    overflow-y: scroll;
+    word-wrap: break-word;
+    margin-left:-1px;
+}
+
+.changePass{
+    width:20%;
+    height:35px;;
+    padding:3px;
+    margin-left: 10px;
+    background-color: rgb(100, 194, 150);
+    border:1px solid seagreen;
+    color:rgb(7, 27, 16)
+}
+
+.date1{
+    margin-left:200px;
+    color:rgb(134, 24, 138);
+    font-size: 13px;
+}
+
+.date2{
+    margin-right:200px;
+    color:rgb(134, 24, 138);
+    font-size: 13px;
+}
+
+.design1{
+    background-color:rgb(61, 207, 202);
+    width:500px;
+    margin-right:400px;
+    margin-left:10px;
+    padding:10px;
+    word-wrap: break-word;
+    border-radius: 25px 25px 25px 0px;
+}
+
+.design2{
+    background-color:rgb(61, 207, 202);
+    width:500px;
+    margin-left:400px;
+    margin-right:10px;
+    padding:10px;
+    text-align: right;
+    word-wrap: break-word;
+    border-radius: 25px 25px 0px 25px;
+}
+
+.email1{
+    color:rgb(134, 24, 138);
+    font-size: 13px;
+}
+
+.email2{
+    color:rgb(134, 24, 138);
+    font-size: 13px;
+}
+
+form{
+    width: 40%;
+    height: 300px;
+    background-image: url("../images/backGround.jpg"); 
+    margin-inline-start: 300px;
+    margin-left: 350px;
+    margin-top: 50px;
+    padding:20px 40px;
+    border: 10px #58BCB1 ridge;
+    border-radius: 30px;
+}
+
 input[type=password], input[type=email] {
     width: 50%;
     padding: 15px;
@@ -9,7 +143,71 @@ input[type=password], input[type=email] {
     opacity: 0.8;
 }
 
-.text{
+.login {
+    padding: 16px;
+    text-align: center;
+    color:#070d41;
+}
+
+.loginsubmit {
+    background-color:rgb(178, 231, 224);
+    color: rgb(68, 163, 133);
+    border: 1px rgb(41, 139, 135) solid;
+    cursor: pointer;
+    width: 50%;
+    padding: 15px;
+    text-align: center;
+    margin-top:5px;
+    margin-left:1px;
+}
+
+loginsubmit:hover {
+    opacity: 0.7;
+}
+
+.logoutchangepass{
+    color:rgb(19, 84, 87);
+    height:20%;
+    background-color:rgb(71, 182, 178);
+    padding:5px;
+}
+
+.message1{
+    background-color:rgb(61, 207, 202);
+    color:rgb(16, 66, 70);
+    font-size: 18px;
+    font-style: italic;
+}
+
+.message2{
+    background-color:rgb(61, 207, 202);
+    color:rgb(16, 66, 70);
+    font-size: 18px;
+    font-style: italic;
+}
+
+.sendmsg{
+    color:rgb(19, 84, 87);
+    width:99%;
+    height:100%;
+    background-color:rgb(71, 182, 178);
+}
+
+.sign{
+    height:80%;
+    width:50%;
+    margin-left: 25%;
+}
+
+.signupsubmit{
+    width:15%;
+    padding:3px;
+    background-color: rgb(100, 194, 150);
+    border:1px solid seagreen;
+    color:rgb(7, 27, 16);
+}
+
+.signuptext{
     width: 50%;
     padding: 15px;
     border: 1px solid white;
@@ -20,58 +218,14 @@ input[type=password], input[type=email] {
     opacity: 0.8;
 }
 
-.but {
-    background-color:rgb(178, 231, 224);
-    color: rgb(68, 163, 133);
-    border: 1px rgb(41, 139, 135) solid;
-    cursor: pointer;
-    width: 50%;
-    padding: 15px;
-    text-align: center;
-    margin-top:5px;
-    margin-left:1px;
-    
-}
-
-but:hover {
-    opacity: 0.7;
-}
-
-body {
-    color:#070d41;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align:center;
-    background-image: url("../images/backGround.jpg"); 
-    height:95%;
-    width:95%;
-}
-
-.container {
-    padding: 16px;
-    text-align: center;
-    color:#070d41;
+span.label{
+    margin-left:6px;
 }
 
 span.psw {
     float: right;
     padding-top: 10px;
     padding-right: 100px;
-}
-
-span.label{
-    margin-left:6px;
-}
-
-form{
-    width: 40%;
-    height: 60%;
-    background-image: url("../images/backGround.jpg"); 
-    margin-inline-start: 300px;
-    margin-left: 350px;
-    margin-top: 50px;
-    padding:20px 40px;
-    border: 10px #58BCB1 ridge;
-    border-radius: 30px;
 }
 
 table{
@@ -81,182 +235,50 @@ table{
     margin:10px;
 }
 
-.sign{
-    height:80%;
-    width:50%;
-    margin-left: 25%;
-}
-
-.forgot{
-    margin-left: 25%;
-    height:50%;
-    width:50%;
-}
-
-.forgot{
-    width:20%;
-    height:10%;
-    padding:3px;
-    margin-left: 10px;
-    background-color: rgb(100, 194, 150);
-    border:1px solid seagreen;
-    color:rgb(7, 27, 16)
-}
-
-.sub{
-    width:15%;
-    padding:3px;
-    background-color: rgb(100, 194, 150);
-    border:1px solid seagreen;
-    color:rgb(7, 27, 16);
-}
-  
-.box1{
-    border:10px solid rgb(71, 182, 178);
-    background-color:rgb(61, 207, 202);
-    width:1240px;
-    height:108px;
-    color:rgb(31, 94, 92);
-}
-
-.box2{
-    border:10px solid rgb(71, 182, 178);
-    height:500px;
-    width:280px;
-    text-align: left;
-    background-color: rgb(61, 207, 202);
-    color:rgb(50, 104, 90);
-    overflow: scroll;
-}
-
-.box3{
-    border:10px solid rgb(71, 182, 178);
-    height:500px;
-    width:940px;
-    background-color:rgb(178, 218, 223);
-    overflow: scroll;
-    text-align: left;
-    margin-left:-4px;
-    overflow: scroll;
-}
-
-.type{
-    background-color:rgb(181, 215, 219);
-    width:96%;
-    padding:10px;
-}
-
-.button{
-    color:rgb(56, 178, 194);
-    width:40%;
-    background-color:rgb(20, 212, 30);
-    padding:10px;
-}
-
-.logout{
-    color:rgb(19, 84, 87);
-    height:20%;
-    background-color:rgb(71, 182, 178);
-    padding:5px;
-}
-
-.table{
-      width:101%;
-      margin-top:-33px;
-      margin-left:-12px;
-}
-
-.table2{
-      padding:2px;
-      width:95%;
-      margin-top:90px;
-      height:10px;
-}
-
-.table3{
+.table1{
     width:200px;
     margin-top:-80px;
     margin-left:900px;
 }
 
-.back{
-    color:black;
-    height:10%;
-    width:20%;
-    background-color:rgb(20, 212, 30);
-    padding:8px;
+.table2{
+   
+    width:101%;
+    margin-top:-33px;
+    margin-left:-12px;
 }
 
-.button2{
-    color:rgb(19, 84, 87);
-    width:99%;
-    height:100%;
-    background-color:rgb(71, 182, 178);
-    /* padding:10px; */
-    /* margin-left:820px; */
+.table3{
+    padding:2px;
+    width:95%;
+    height:10px;
+    border:2px solid rgb(19, 84, 87);
 }
-.design1{
-    background-color:rgb(61, 207, 202);
-    height:70%;
-    width:500px;
-    margin-right:400px;
-    margin-left:10px;
+.table3div{
+    background-color:rgb(178, 218, 223);  
+    margin-bottom:-10px;
+}
+
+.typemsg{
+    background-color:rgb(181, 215, 219);
+    width:96%;
     padding:10px;
-    column-count: initial;
-    border-radius: 25px 25px 25px 0px;
-}
-
-.design2{
-    background-color:rgb(61, 207, 202);
-    height:70%;
-    width:500px;;
-    margin-left:400px;
-    margin-right:10px;
-    padding:10px;
-    text-align: right;
-    border-radius: 25px 25px 0px 25px;
-}
-
-.date1{
-    margin-left:200px;
-    color:rgb(134, 24, 138);
-    font-size: 13px;
-}
-
-.email1{
-    color:rgb(134, 24, 138);
-    font-size: 13px;
-
-}
-
-.message1{
-    background-color:rgb(61, 207, 202);
-    color:rgb(16, 66, 70);
-    font-size: 18px;
-    font-style: italic;
-}
-
-.date2{
-    margin-right:200px;
-    color:rgb(134, 24, 138);
-    font-size: 13px;
-}
-
-.email2{
-    color:rgb(134, 24, 138);
-    font-size: 13px;
-
-}
-
-.message2{
-    background-color:rgb(61, 207, 202);
-    color:rgb(16, 66, 70);
-    font-size: 18px;
-    font-style: italic;
 }
 
 .user{
     color:rgb(134, 24, 138);
-    margin-right:1000px;
+    margin-right:600px;
     font-size: 20px;
+}
+
+.userlist{
+    color:rgb(23, 83, 85);
+    width:250px;
+    text-align: left;
+    height: 50px;
+    background-color: rgb(71, 182, 178);
+    font-size: 20px;
+    padding:10px;
+    margin-left:7px;
+    margin-right:7px;
 }

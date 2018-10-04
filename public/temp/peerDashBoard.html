@@ -1,7 +1,10 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
 <header class="boxheader">
-    <h1>Welcome to ChatApp</h1>
-    <div class="user"><u>{{loginuser}}</u></div>
+    <h1>Welcome to ChatApp </h1>
+    <div class="user">
+        <button type="submit" name="back" ng-click="back()" class="signupsubmit">back</button>
+        <u>{{loginuser}} ----> {{receiver}}</u>
+    </div>
     <table class="table1">
         <tr>
             <td>
@@ -16,39 +19,39 @@
 
 <table class="table2">
     <tr>
-        <td><div class="boxusers"><h3><p ng-repeat="x in array"><button class="userlist" ng-click="receiver(x.userid,x.email)"><span>{{x.email}}</span></button></p></h3></div></td>
+        <td><div class="boxusers"><h3><p ng-repeat="x in array"><button class="userlist" ng-click="peerreceiver(x.userid,x.email)"><span>{{x.email}}</span></button></p></h3></div></td>
         
-        <td >
+        <td>
             <div class="boxchat">
-                <div class="boxgroup"><div>
-                    <div ng-repeat="y in chatList track by $index" >
-                        <div class="design1" ng-if="y.email!=loginuser">
-                            <span class="email1">{{y.email}}</span>
+                <div class="boxpeer"><div>
+                    <div ng-repeat="y in peerchatList track by $index" >
+                        <div class="design1" ng-if="y.senEmail!=loginuser">
+                            <span class="email1">{{y.recEmail}}</span>
                             <span class="date1">{{y.date|date:'medium'}}</span><br><br>
                             <span class="message1">{{y.message}}</span><br>
                         </div>
 
-                        <div class="design2" ng-if="y.email==loginuser">
+                        <div class="design2" ng-if="y.senEmail==loginuser">
                             <span class="date2">{{y.date|date:'medium'}}</span>
-                            <span class="email2">{{y.email}}</span><br><br>
+                            <span class="email2">{{y.senEmail}}</span><br><br>
                             <span class="message2">{{y.message}}</span><br>
                         </div><br>
-                     </div>
+                    </div>
                 </div></div>
 
                 <div class="table3div">
                     <table class="table3">
                         <tr>
                             <td>
-                                <textarea name="text" class="typemsg" cols="13" rows="2" placeholder="type your message here" ng-model="message"></textarea>
+                                <textarea name="text" class="typemsg" cols="13" rows="2" placeholder="type your message here" ng-model="peermessage"></textarea>
                             </td>
                             <td>
-                                <button type="submit" name="button" class="sendmsg" ng-click="send()">SEND</button>
+                                <button type="submit" name="button" class="sendmsg" ng-click="peersend()">SEND</button>
                             </td>
                         </tr>
                     </table>
                 </div>
-
+                
             </div>
         </td>
     </tr>

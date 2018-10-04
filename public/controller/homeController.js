@@ -2,12 +2,12 @@ chatApp.controller('homeController', function($scope, $http, $location, SocketSe
     var userstoken=localStorage.getItem("token");
     var userid=localStorage.getItem("userid");
     var email=localStorage.getItem("email");
-    var array=[];
     $scope.loginuser=email;
+
     /**
-    *@description taking token and userid from local storage
+    *@description getting the list of users
     */
-    
+   var array=[];
     $http({
         method: 'GET',
         url: 'auth/users/'+userid+'/userlist',
@@ -18,7 +18,7 @@ chatApp.controller('homeController', function($scope, $http, $location, SocketSe
     .then(function(response){
         for(var i=0;i<(response.data.message).length;i++)       
         {
-            array.push(response.data.message[i].email);
+            array.push(response.data.message[i]);
            /**
             *@description pushing the user list to an array
             */
@@ -50,11 +50,14 @@ chatApp.controller('homeController', function($scope, $http, $location, SocketSe
     *@description getting the chathistory from db
     */
     var chatList=[];
-
     $scope.send = function () {
+        if($scope.message==undefined){  
+            return;
+        }
         SocketService.emit('tobackend', { 
             "userid": userid,"email": email, "message": $scope.message, "date": new Date() 
         });
+        $scope.message=null;
     }
     $http({
         method: 'GET',
@@ -67,10 +70,21 @@ chatApp.controller('homeController', function($scope, $http, $location, SocketSe
         chatList.push(response.data.message[i]);
         }
         $scope.chatList=chatList;
+        
     })
-    
-    
     SocketService.on("tofrontend", function(data){
         $scope.chatList.push(data);
     })
+
+   /**
+    *@description group chat to peer to peer chat
+    */
+    $scope.receiver=function(recId,recEmail)
+    {
+        localStorage.removeItem("recId");
+        localStorage.removeItem("recEmail");
+        localStorage.setItem("recId",recId);
+        localStorage.setItem("recEmail",recEmail);
+        $location.path("/peerDashBoard"); 
+    }
 });

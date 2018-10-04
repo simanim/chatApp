@@ -33,7 +33,17 @@ chatApp.config(function($routeProvider) {
             templateUrl : './temp/dashBoard.html',
             controller  : 'homeController'
         })
+       /**
+        *@description route for the peer to peer dashboard page
+        */
+        .when('/peerDashBoard', {
+            templateUrl : './temp/peerDashBoard.html',
+            controller  : 'peerController'
+        })
 
+       /**
+        *@description route for the change password page
+        */
         .when('/changePass', {
             templateUrl : './temp/changePass.html',
             controller  : 'changepassController'

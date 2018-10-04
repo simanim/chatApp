@@ -1,13 +1,15 @@
-chatApp.controller('changepassController', function($scope, $http, $location){
-    console.log("in")
+chatApp.controller('changepassController', function($scope, $http){
     $scope.user={
-        'email': '',
         'password' : '',
         'confPassword' : ''
     }
-    
+    var username=localStorage.getItem("email");
     $scope.changePass = function(){
-        console.log("in")
+        if($scope.user.password=="" || $scope.user.confPassword==""){  
+            return;
+        }
+
+        $scope.user.email=username;
         console.log("changePass credential process", $scope.user);
         $http({
             method: 'POST',
@@ -20,7 +22,6 @@ chatApp.controller('changepassController', function($scope, $http, $location){
                 //$location.path("/dashBoard"); 
             }
         },function(err){
-        
             console.log(err);
             console.log($scope.user);
             $scope.message="Unsuccessful! check your details";

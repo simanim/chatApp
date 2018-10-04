@@ -1,9 +1,11 @@
 chatApp.controller('forgotPassController', function($scope, $http){
-    console.log("in");
     $scope.user={
         'email': ''
     }
     $scope.forgotPass = function(){
+        if($scope.user.email==""){  
+            return;
+        }
         console.log("forgotPass credential process", $scope.user);
         $http({
             method: 'POST',

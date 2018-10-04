@@ -14,8 +14,12 @@ chatApp.controller('loginController', function($scope, $http, $location){
         $scope.user={
             'email': '',
             'password': ''
-        }
+        } 
+        
         $scope.login = function(){
+            if($scope.user.email=="" || $scope.user.password==""){  
+            return;
+            }
             console.log("login credential process", $scope.user);
             $http({
                 method: 'POST',

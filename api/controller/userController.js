@@ -41,6 +41,7 @@ function validatePassword(password) {
 }
 var usermod = require('../models/userSchema');
 var chatmod = require('../models/chatSchema');
+var peermod = require('../models/peerSchema');
 var jwt = require('jsonwebtoken');
 
 /** 
@@ -294,10 +295,10 @@ exports.changePass = function(req,res)
 {
     var db = new usermod();
     var response={};
-    var email1=req.body.email;
+    var email=req.body.email;
     db.password = req.body.password;
     db.confPassword = req.body.confPassword;
-    if(validateEmail(email1) == false){
+    if(validateEmail(email) == false){
        /**
         *@description checking the email is valid or not
         */
@@ -315,7 +316,7 @@ exports.changePass = function(req,res)
     db.password = encrypt(req.body.password);
     db.confPassword = encrypt(req.body.confPassword);
     
-    usermod.find({"email":email1},function(err,data){
+    usermod.find({"email":email},function(err,data){
         if(err){
             response = {"error" : true,"message" : "error", "err":err};
             return res.status(400).send(response);
@@ -391,6 +392,62 @@ exports.getChat = function(req,res)
         *@description retriving all the messages from the data base
         */
         if(err) {
+            response = {"error" : true,"message" : "unsuccess", "err":err};
+            return res.status(401).send(response);
+        } 
+        else{
+            //console.log(data);
+            response = {"error" : false,"message" : data};
+            return res.status(200).send(response);
+        }
+    });
+}
+
+exports.peerchatList = function(senId, recId, senEmail, recEmail, message, date)
+{
+    console.log("inn");
+    var db=new peermod();
+    var response={};
+    db.senId = senId;
+    db.recId = recId;
+    db.senEmail = senEmail;
+    db.recEmail = recEmail;
+    db.message = message;
+    db.date = date;
+    // console.log(recEmail);
+    // console.log(recId);
+    // console.log(senEmail);
+    // console.log(senId);
+    // console.log(message);
+    // console.log(date);
+
+    db.save(function(err){
+       /**
+        *@description saving the messages in the data base
+        */
+        if(err) {
+            response = {"error" : true,"message" : "unsuccess", "err":err};
+        } 
+        else{
+            response = {"error" : false,"message" : "success"};
+        }
+        console.log(response);
+    });
+}
+
+exports.peergetChat = function(req,res)
+{
+    //var senId=req.body.senId;
+    var senId=req.params.id;
+    var recId=req.params.recId;
+    console.log(senId);
+    console.log(recId);
+    var response={};
+    peermod.find({$or:[{"senId":senId,"recId":recId},{"senId":recId,"recId":senId}]},function(err,data){
+   /**
+    *@description retriving all the messages from the data base
+    */
+       if(err) {
             response = {"error" : true,"message" : "unsuccess", "err":err};
             return res.status(401).send(response);
         } 

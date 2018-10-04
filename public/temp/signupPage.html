@@ -1,21 +1,23 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/mystyle.css">
 <form method="POST" class="sign"    name="form">
-        <p><u><h3>{{message}}</h3></u></p>
+    <p><u><h3>{{message}}</h3></u></p>
     <table>
         <tr>
             <td>First Name</td>
             <td>
-                <input type="text" class="text" name="firstname"  maxlength="40" ng-model="user.firstname" ng-pattern="/^[a-z ]{3,40}$/" required/>
+                <input type="text" class="signuptext" name="firstname"  maxlength="40" ng-model="user.firstname" ng-pattern="/^[a-z ]{3,40}$/" required/>
                 <div style="color:rgb(209, 112, 112)" ng-show="form.firstname.$error.pattern"><small><i>min 3 characters & in lowercase</i></small></div>
             </td>
         </tr>
+
         <tr>
             <td>Last Name</td>
             <td>
-                <input type="text" class="text" name="lastname" maxlength="40" ng-model="user.lastname" ng-pattern="/^[a-z ]{3,40}$/" required/>
+                <input type="text" class="signuptext" name="lastname" maxlength="40" ng-model="user.lastname" ng-pattern="/^[a-z ]{3,40}$/" required/>
                 <div style="color:rgb(209, 112, 112)" ng-show="form.lastname.$error.pattern"><small><i>min 3 characters & in lowercase</i></small></div>
             <td>
         </tr>
+
         <tr>
             <td>Email Id</td>
             <td>
@@ -23,6 +25,7 @@
                 <div style="color:rgb(209, 112, 112)" ng-show="form.Email_Id.$error.pattern"><small><i>invalid email id</i></small></div>
             </td>
         </tr>
+
         <tr>
             <td>Password</td>
             <td>
@@ -30,6 +33,7 @@
                 <div style="color:rgb(209, 112, 112)" ng-show="form.password.$error.pattern"><small><i>invalid password! 6-16 characters</i></small></div>
             </td>
         </tr>
+        
         <tr>
             <td>Confirm Password</td>
             <td>
@@ -38,10 +42,7 @@
             </td>
         </tr>
     </table>
-    <button type="submit" class="sub" ng-click="register()">Sign Up</button>
-    
-    <br><br>
 
+    <button type="submit" class="signupsubmit" ng-click="register()">Sign Up</button><br><br>
     <div><span>already have an account? <a href="#">login</a></span></div>
-
 </form> 

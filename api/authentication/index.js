@@ -14,7 +14,9 @@ var auth = function(req, res, next){
                   return res.status(401).send(response);
             }
             else{
+                  console.log("in");
                   console.log(decoded);
+                  req.users={decoded:decoded};
                   next();
             }
       });    

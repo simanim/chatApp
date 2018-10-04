@@ -9,6 +9,9 @@ chatApp.controller('signupController', function($scope, $http, $location){
     }
     console.log($scope.user)
     $scope.register = function(){
+        if($scope.user.firstname=="" || $scope.user.lastname=="" || $scope.user.email=="" || $scope.user.password=="" || $scope.user.confPassword==""){  
+            return;
+            }
         console.log("register credential process", $scope.user);
         $http({
             method: 'POST',
