@@ -403,6 +403,16 @@ exports.getChat = function(req,res)
     });
 }
 
+/**
+ * 
+ *@param {*} senId
+ *@param {*} recId
+ *@param {*} senEmail
+ *@param {*} recEmail
+ *@param {*} message
+ *@param {*} date
+ *@description for saving peer to peer chat
+ */
 exports.peerchatList = function(senId, recId, senEmail, recEmail, message, date)
 {
     console.log("inn");
@@ -414,13 +424,6 @@ exports.peerchatList = function(senId, recId, senEmail, recEmail, message, date)
     db.recEmail = recEmail;
     db.message = message;
     db.date = date;
-    // console.log(recEmail);
-    // console.log(recId);
-    // console.log(senEmail);
-    // console.log(senId);
-    // console.log(message);
-    // console.log(date);
-
     db.save(function(err){
        /**
         *@description saving the messages in the data base
@@ -435,9 +438,14 @@ exports.peerchatList = function(senId, recId, senEmail, recEmail, message, date)
     });
 }
 
+/**
+ * 
+ *@param {*} req
+ *@param {*} res
+ *@description for getting the peer to peer chat history
+ */
 exports.peergetChat = function(req,res)
 {
-    //var senId=req.body.senId;
     var senId=req.params.id;
     var recId=req.params.recId;
     console.log(senId);

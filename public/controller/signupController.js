@@ -1,5 +1,4 @@
 chatApp.controller('signupController', function($scope, $http, $location){
-    console.log('register')
     $scope.user={
         'firstname' : '',
         'lastname' : '',
@@ -7,7 +6,6 @@ chatApp.controller('signupController', function($scope, $http, $location){
         'password': '',
         'confPassword': ''
     }
-    console.log($scope.user)
     $scope.register = function(){
         if($scope.user.firstname=="" || $scope.user.lastname=="" || $scope.user.email=="" || $scope.user.password=="" || $scope.user.confPassword==""){  
             return;

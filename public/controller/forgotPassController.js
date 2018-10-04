@@ -17,9 +17,11 @@ chatApp.controller('forgotPassController', function($scope, $http){
                 $scope.message="success";
             }
         },function(err){
-        
             console.log(err);
             $scope.message="Unsuccessful! check your details";
+            /**
+            *@description wrong details
+            */
         })
     }
 });

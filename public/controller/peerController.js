@@ -1,5 +1,4 @@
 chatApp.controller('peerController', function($scope, $http, $location, SocketService){
-    console.log("enter to peer controller");
     var userstoken=localStorage.getItem("token");
     var userid=localStorage.getItem("userid");
     var email=localStorage.getItem("email");

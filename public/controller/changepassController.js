@@ -19,12 +19,14 @@ chatApp.controller('changepassController', function($scope, $http){
         .then(function(response){
             if(response.data.error==false){
                 $scope.message="successful";
-                //$location.path("/dashBoard"); 
             }
         },function(err){
             console.log(err);
             console.log($scope.user);
-            $scope.message="Unsuccessful! check your details";
+            $scope.message="Unsuccessful! check your details"; 
+           /**
+            *@description wrong details
+            */
         })
     }
 });

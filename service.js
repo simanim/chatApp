@@ -23,7 +23,6 @@ io.on('connection', function(client) {
     client.on('disconnected', function() {
         console.log("disconnected");
     })
-    console.log("entered to service.js");
     client.on('tobackend', function(data) {
         users.chatList(data.userid, data.email, data.message, data.date);
         io.emit('tofrontend',data)
