@@ -4,8 +4,12 @@ chatApp.controller('peerController', function($scope, $http, $location, SocketSe
     var email=localStorage.getItem("email");
     var recId = localStorage.getItem("recId");
     var recEmail = localStorage.getItem("recEmail");
+    
     $scope.loginuser=email;
     $scope.receiver=recEmail;
+    console.log("sender  "+$scope.loginuser);
+    console.log("receiver  "+$scope.receiver);
+
 
    /**
     *@description getting the list of users
@@ -59,6 +63,17 @@ chatApp.controller('peerController', function($scope, $http, $location, SocketSe
 
     }
 
+    $http({
+        method: 'GET',
+        url: 'auth/users/'+userid+'/peergetChat/'+recId,
+        headers:{
+            'token': userstoken
+        }
+    }).then(function(response){
+        console.log("history")
+        console.log(response.data.message);
+        $scope.peerchatList=response.data.message;
+    })
    /**
     *@description getting the chathistory from db
     */
@@ -68,22 +83,24 @@ chatApp.controller('peerController', function($scope, $http, $location, SocketSe
         }
         var senId=userid;
         var senEmail=email;
+        var recId=localStorage.getItem("recId");
+        var recEmail=localStorage.getItem("recEmail");
+        console.log("sent");
+        console.log(senId);
+        console.log(recId);
+        console.log(senEmail);
+        console.log(recEmail);
         SocketService.emit('peertobackend', { 
             "senId": senId, "recId": recId,"senEmail": senEmail, "recEmail": recEmail, "message": $scope.peermessage, "date": new Date() 
         });
-        $scope.peerchatList.push({"senId": senId, "recId": recId,"senEmail": senEmail, "recEmail": recEmail, "message": $scope.peermessage, "date": new Date()})
+        //$scope.peerchatList.push({"senId": senId, "recId": recId,"senEmail": senEmail, "recEmail": recEmail, "message": $scope.peermessage, "date": new Date()})
         $scope.peermessage=null;
     }
-    $http({
-        method: 'GET',
-        url: 'auth/users/'+userid+'/peergetChat/'+recId,
-        headers:{
-            'token': userstoken
-        }
-    }).then(function(response){
-        $scope.peerchatList=response.data.message;
-    })
+    
     SocketService.on("peertofrontend", function(data){
+        console.log("on");
+        console.log(data);
+        if(($scope.loginuser == data.senEmail && $scope.receiver == data.recEmail) || ($scope.loginuser == data.recEmail && $scope.receiver == data.senEmail))
         $scope.peerchatList.push(data);
     }) 
 
@@ -94,19 +111,8 @@ chatApp.controller('peerController', function($scope, $http, $location, SocketSe
         $scope.receiver=recEmail;
         localStorage.setItem("recId",recId);
         localStorage.setItem("recEmail",recEmail);
-
-        $scope.peersend = function () {
-            if($scope.peermessage==undefined){  
-                return;
-            }
-            var senId=userid;
-            var senEmail=email;
-            SocketService.emit('peertobackend', { 
-                "senId": senId, "recId": recId,"senEmail": senEmail, "recEmail": recEmail, "message": $scope.peermessage, "date": new Date() 
-            });
-            $scope.peerchatList.push({"senId": senId, "recId": recId,"senEmail": senEmail, "recEmail": recEmail, "message": $scope.peermessage, "date": new Date()})
-            $scope.peermessage=null;
-        }
+        console.log(localStorage);
+        $location.path('/peerDashBoard');
         $http({
             method: 'GET',
             url: 'auth/users/'+userid+'/peergetChat/'+recId,
@@ -114,11 +120,10 @@ chatApp.controller('peerController', function($scope, $http, $location, SocketSe
                 'token': userstoken
             }
         }).then(function(response){
+            console.log("history")
+            console.log(response.data.message)
             $scope.peerchatList=response.data.message;
         })
-        SocketService.on("peertofrontend", function(data){
-            $scope.peerchatList.push(data);
-        }) 
     }
 
 });

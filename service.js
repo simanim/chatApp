@@ -25,10 +25,10 @@ io.on('connection', function(client) {
     })
     client.on('tobackend', function(data) {
         users.chatList(data.userid, data.email, data.message, data.date);
-        io.emit('tofrontend',data)
+        io.emit('tofrontend',data);
     })
     client.on('peertobackend', function(data) {
         users.peerchatList(data.senId, data.recId, data.senEmail, data.recEmail, data.message, data.date);
-        io.emit(data.recId,data)
+        io.emit('peertofrontend',data);
     })
 });

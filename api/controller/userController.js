@@ -460,7 +460,6 @@ exports.peergetChat = function(req,res)
             return res.status(401).send(response);
         } 
         else{
-            console.log(data);
             response = {"error" : false,"message" : data};
             return res.status(200).send(response);
         }

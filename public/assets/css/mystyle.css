@@ -95,6 +95,7 @@ body {
     margin-right:400px;
     margin-left:10px;
     padding:10px;
+    text-align: left;
     word-wrap: break-word;
     border-radius: 25px 25px 25px 0px;
 }

@@ -26,7 +26,7 @@
                 <div class="boxpeer"><div>
                     <div ng-repeat="y in peerchatList track by $index" >
                         <div class="design1" ng-if="y.senEmail!=loginuser">
-                            <span class="email1">{{y.recEmail}}</span>
+                            <span class="email1">{{y.senEmail}}</span>
                             <span class="date1">{{y.date|date:'medium'}}</span><br><br>
                             <span class="message1">{{y.message}}</span><br>
                         </div>
